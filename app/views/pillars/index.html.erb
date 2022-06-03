@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pillars</h1>
+
+<div id="pillars">
+  <% @pillars.each do |pillar| %>
+    <%= render pillar %>
+    <p>
+      <%= link_to "Show this pillar", pillar %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New pillar", new_pillar_path %>

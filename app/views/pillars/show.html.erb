@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @pillar %>
+
+<div>
+  <%= link_to "Edit this pillar", edit_pillar_path(@pillar) %> |
+  <%= link_to "Back to pillars", pillars_path %>
+
+  <%= button_to "Destroy this pillar", @pillar, method: :delete %>
+</div>

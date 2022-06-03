@@ -1,0 +1,2 @@
+class Pillar < ApplicationRecord
+end
