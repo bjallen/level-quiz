@@ -32,6 +32,8 @@ class BehaviorsController < ApplicationController
         format.html { redirect_to behavior_url(@behavior), notice: "Behavior was successfully created." }
         format.json { render :show, status: :created, location: @behavior }
       else
+        @competencies = Competency.all
+        @levels = Level.all
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @behavior.errors, status: :unprocessable_entity }
       end
@@ -45,6 +47,8 @@ class BehaviorsController < ApplicationController
         format.html { redirect_to behavior_url(@behavior), notice: "Behavior was successfully updated." }
         format.json { render :show, status: :ok, location: @behavior }
       else
+        @competencies = Competency.all
+        @levels = Level.all
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @behavior.errors, status: :unprocessable_entity }
       end

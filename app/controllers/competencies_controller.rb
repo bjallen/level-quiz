@@ -30,6 +30,7 @@ class CompetenciesController < ApplicationController
         format.html { redirect_to competency_url(@competency), notice: "Competency was successfully created." }
         format.json { render :show, status: :created, location: @competency }
       else
+        @pillars = Pillar.all
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @competency.errors, status: :unprocessable_entity }
       end
@@ -43,6 +44,7 @@ class CompetenciesController < ApplicationController
         format.html { redirect_to competency_url(@competency), notice: "Competency was successfully updated." }
         format.json { render :show, status: :ok, location: @competency }
       else
+        @pillars = Pillar.all
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @competency.errors, status: :unprocessable_entity }
       end

@@ -18,11 +18,18 @@ RSpec.describe "/competencies", type: :request do
   # Competency. As you add validations to Competency, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    pillar = Pillar.create!(name: "a")
+    {
+      name: "comp",
+      pillar_id: pillar.id
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      name: "comp",
+      pillar_id: nil
+    }
   }
 
   describe "GET /index" do
@@ -77,9 +84,9 @@ RSpec.describe "/competencies", type: :request do
         }.to change(Competency, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "renders an unsuccessful response (i.e. 422 Unprocessable Entity)" do
         post competencies_url, params: { competency: invalid_attributes }
-        expect(response).to be_successful
+        expect(response.code).to eq("422")
       end
     end
   end
@@ -87,14 +94,19 @@ RSpec.describe "/competencies", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        pillar = Pillar.create!(name: "a")
+        {
+          name: "comp",
+          pillar_id: pillar.id
+        }
       }
 
       it "updates the requested competency" do
         competency = Competency.create! valid_attributes
         patch competency_url(competency), params: { competency: new_attributes }
         competency.reload
-        skip("Add assertions for updated state")
+        expect(competency.id).to be_present
+        expect(competency.name).to eq("comp")
       end
 
       it "redirects to the competency" do
@@ -106,10 +118,10 @@ RSpec.describe "/competencies", type: :request do
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "renders an unsuccessful response (i.e. 422 Unprocessable Entity)" do
         competency = Competency.create! valid_attributes
         patch competency_url(competency), params: { competency: invalid_attributes }
-        expect(response).to be_successful
+        expect(response.code).to eq("422")
       end
     end
   end

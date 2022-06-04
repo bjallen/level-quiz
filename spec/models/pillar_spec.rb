@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Pillar, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "requires a name" do
+    pillar = Pillar.new
+    expect(pillar).to be_invalid
+    expect(pillar.errors[:name]).to include("can't be blank")
+  end
 end

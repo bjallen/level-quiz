@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Level, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "requires a name" do
+    level = Level.new
+    expect(level).to be_invalid
+    expect(level.errors[:name]).to include("can't be blank")
+  end
 end

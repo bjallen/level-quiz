@@ -18,11 +18,11 @@ RSpec.describe "/levels", type: :request do
   # Level. As you add validations to Level, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: "level 1839" }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: nil }
   }
 
   describe "GET /index" do
@@ -77,9 +77,9 @@ RSpec.describe "/levels", type: :request do
         }.to change(Level, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "renders an unsuccessful response (i.e. 422 Unprocessable Entity)" do
         post levels_url, params: { level: invalid_attributes }
-        expect(response).to be_successful
+        expect(response.code).to eq("422")
       end
     end
   end
@@ -87,14 +87,15 @@ RSpec.describe "/levels", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "level 14555539" }
       }
 
       it "updates the requested level" do
         level = Level.create! valid_attributes
         patch level_url(level), params: { level: new_attributes }
         level.reload
-        skip("Add assertions for updated state")
+        expect(level.id).to be_present
+        expect(level.name).to eq("level 14555539")
       end
 
       it "redirects to the level" do
@@ -106,10 +107,10 @@ RSpec.describe "/levels", type: :request do
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "renders an unsuccessful response (i.e. 422 Unprocessable Entity)" do
         level = Level.create! valid_attributes
         patch level_url(level), params: { level: invalid_attributes }
-        expect(response).to be_successful
+        expect(response.code).to eq("422")
       end
     end
   end

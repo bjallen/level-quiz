@@ -18,11 +18,25 @@ RSpec.describe "/behaviors", type: :request do
   # Behavior. As you add validations to Behavior, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    pillar = Pillar.create!(name: "a")
+    competency = Competency.create!(name: "b", pillar: pillar)
+    level = Level.create!(name: "c")
+    {
+      description: "stuff",
+      competency_id: competency.id,
+      level_id: level.id
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    pillar = Pillar.create!(name: "a")
+    competency = Competency.create!(name: "b", pillar: pillar)
+    level = Level.create!(name: "c")
+    {
+      description: nil,
+      competency_id: nil,
+      level_id: level.id
+    }
   }
 
   describe "GET /index" do
@@ -77,9 +91,9 @@ RSpec.describe "/behaviors", type: :request do
         }.to change(Behavior, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "renders an unsuccessful response (i.e. 422 Unprocessable Entity)" do
         post behaviors_url, params: { behavior: invalid_attributes }
-        expect(response).to be_successful
+        expect(response.code).to eq("422")
       end
     end
   end
@@ -87,14 +101,24 @@ RSpec.describe "/behaviors", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        pillar = Pillar.create!(name: "a")
+        competency = Competency.create!(name: "b", pillar: pillar)
+        level = Level.create!(name: "c")
+        {
+          description: "stuff",
+          competency_id: competency.id,
+          level_id: level.id
+        }
       }
 
       it "updates the requested behavior" do
         behavior = Behavior.create! valid_attributes
         patch behavior_url(behavior), params: { behavior: new_attributes }
         behavior.reload
-        skip("Add assertions for updated state")
+        expect(behavior.id).to be_present
+        expect(behavior.description).to eq("stuff")
+        expect(behavior.competency_id).to be_present
+        expect(behavior.level_id).to be_present
       end
 
       it "redirects to the behavior" do
@@ -106,10 +130,10 @@ RSpec.describe "/behaviors", type: :request do
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "renders an unsuccessful response (i.e. 422 Unprocessable Entity)" do
         behavior = Behavior.create! valid_attributes
         patch behavior_url(behavior), params: { behavior: invalid_attributes }
-        expect(response).to be_successful
+        expect(response.code).to eq("422")
       end
     end
   end
