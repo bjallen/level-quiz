@@ -1,0 +1,11 @@
+StringLiterals:
+  Enabled: false
+
+FrozenStringLiteralComment:
+  Enabled: false
+
+SymbolArray:
+  Enabled: false
+
+Documentation:
+  Enabled: false
