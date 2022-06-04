@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_03_155257) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_03_221648) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,7 +44,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_03_155257) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "quiz_guesses", force: :cascade do |t|
+    t.bigint "behavior_id", null: false
+    t.bigint "level_id", null: false
+    t.bigint "competency_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["behavior_id"], name: "index_quiz_guesses_on_behavior_id"
+    t.index ["competency_id"], name: "index_quiz_guesses_on_competency_id"
+    t.index ["level_id"], name: "index_quiz_guesses_on_level_id"
+  end
+
   add_foreign_key "behaviors", "competencies"
   add_foreign_key "behaviors", "levels"
   add_foreign_key "competencies", "pillars"
+  add_foreign_key "quiz_guesses", "behaviors"
+  add_foreign_key "quiz_guesses", "competencies"
+  add_foreign_key "quiz_guesses", "levels"
 end

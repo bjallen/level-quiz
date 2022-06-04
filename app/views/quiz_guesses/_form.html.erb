@@ -1,0 +1,37 @@
+<%= form_with(model: quiz_guess) do |form| %>
+  <% if quiz_guess.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(quiz_guess.errors.count, "error") %> prohibited this quiz_guess from being saved:</h2>
+
+      <ul>
+        <% quiz_guess.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :behavior_id, style: "display: block" %>
+    <%= form.text_field :behavior_id, value: @behavior.id %>
+  </div>
+  
+  <p>
+    <%= @behavior.description %>
+  </p>
+
+  <h3>Skills & Behaviors</h3>
+  <% @pillars.each do |pillar| %>
+  <h4><%= pillar.name %></h4>
+  <%= form.collection_radio_buttons :competency_id, pillar.competencies, :id, :name, include_hidden: false %>
+  <% end %>
+
+    <h3>Level</h3>
+    <ol>
+   <%= form.collection_radio_buttons :level_id, @levels, :id, :name %>
+    </ol>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
