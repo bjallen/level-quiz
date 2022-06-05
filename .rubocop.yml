@@ -1,11 +1,14 @@
-StringLiterals:
+Style/StringLiterals:
   Enabled: false
 
-FrozenStringLiteralComment:
+Style/FrozenStringLiteralComment:
   Enabled: false
 
-SymbolArray:
+Style/SymbolArray:
   Enabled: false
 
-Documentation:
+Style/Documentation:
+  Enabled: false
+
+Layout/SpaceInsidePercentLiteralDelimiters:
   Enabled: false
