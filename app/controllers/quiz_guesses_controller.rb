@@ -1,4 +1,5 @@
 class QuizGuessesController < ApplicationController
+  before_action :require_login
 
   def show
     @quiz_guess = QuizGuess.find(params[:id])

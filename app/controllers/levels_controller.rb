@@ -1,4 +1,5 @@
 class LevelsController < ApplicationController
+  before_action :require_login
   before_action :set_level, only: %i[ show edit update destroy ]
 
   # GET /levels or /levels.json

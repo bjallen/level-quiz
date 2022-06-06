@@ -1,4 +1,5 @@
 class PillarsController < ApplicationController
+  before_action :require_login
   before_action :set_pillar, only: %i[ show edit update destroy ]
 
   # GET /pillars or /pillars.json
