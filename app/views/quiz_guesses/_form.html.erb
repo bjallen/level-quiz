@@ -12,10 +12,9 @@
   <% end %>
 
   <div>
-    <%= form.label :behavior_id, style: "display: block" %>
-    <%= form.text_field :behavior_id, value: @behavior.id %>
+    <%= form.hidden_field :behavior_id, value: @behavior.id %>
   </div>
-  
+
   <p>
     <%= @behavior.description %>
   </p>
@@ -32,6 +31,6 @@
     </ol>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Submit" %>
   </div>
 <% end %>
