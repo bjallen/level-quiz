@@ -1,3 +1,4 @@
+<div class="tile is-ancestor is-vertical">
 <%= form_with(model: quiz_guess) do |form| %>
   <% if quiz_guess.errors.any? %>
     <div style="color: red">
@@ -15,22 +16,53 @@
     <%= form.hidden_field :behavior_id, value: @behavior.id %>
   </div>
 
-  <p>
-    <%= @behavior.description %>
-  </p>
+  <div class="tile is-parent is-12">
+    <div class="tile p-3">
+      <p class="is-size-2 is-child block notification">
+        <%= @behavior.description %>
+      </p>
+    </div>
+  </div>
 
-  <h3>Skills & Behaviors</h3>
-  <% @pillars.each do |pillar| %>
-  <h4><%= pillar.name %></h4>
-  <%= form.collection_radio_buttons :competency_id, pillar.competencies, :id, :name, include_hidden: false %>
-  <% end %>
+  <div class="tile is-parent">
+    <div class="tile is-child block p-3">
+      <div class="panel">
+        <h3 class="panel-heading">Skills & Behaviors</h3>
+          <% @pillars.each do |pillar| %>
+            <h4 class="panel-block"><%= pillar.name %></h4>
+            <%#
+                `include_hidden: false` is needed below in order to render
+                multiple radio groups with the same id (competency_id).
+                Without this attribute, the hidden field in the final
+                button group will always win if an option in one of the
+                previous groups is selected.
+            %>
+            <%= form.collection_radio_buttons :competency_id, pillar.competencies, :id, :name, include_hidden: false  do |option| %>
+              <% option.label class: "panel-block" do %>
+                <% option.radio_button + "&nbsp".html_safe + option.text %>
+              <% end %>
+            <% end %>
+          <% end %>
 
-    <h3>Level</h3>
-    <ol>
-   <%= form.collection_radio_buttons :level_id, @levels, :id, :name %>
-    </ol>
+      </div>
+    </div>
+    <div class="tile is-child p-3">
+      <div class="panel">
+        <h3 class="panel-heading">Level</h3>
+        <%= form.collection_radio_buttons :level_id, @levels, :id, :name  do |option| %>
+          <% option.label class: "panel-block" do %>
+            <% option.radio_button + "&nbsp".html_safe + option.text %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-  <div>
-    <%= form.submit "Submit" %>
+  <div class="tile is-parent">
+    <div class="tile is-child block">
+      <%= form.submit "Submit", class: "button" %>
+    </div>
   </div>
 <% end %>
+</div>
+
